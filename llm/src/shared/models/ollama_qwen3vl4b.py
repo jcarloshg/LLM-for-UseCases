@@ -1,6 +1,6 @@
 from langchain_ollama import OllamaLLM
 
-from src.shared.infrastructure import environment_config
+from src.shared.infrastructure import ENVIRONMENT_CONFIG
 from .llm_model_base import LLMModelBase
 from .llm_exeptions import OllamaCallError
 
@@ -10,8 +10,8 @@ class OllamaQwen3vl4b(LLMModelBase):
 
     def __init__(self):
         self.llm = OllamaLLM(
-            model=environment_config.ollama_service_model_qwen3vl4b,
-            base_url=environment_config.ollama_service_host
+            model=ENVIRONMENT_CONFIG.OLLAMA_SERVICE_MODEL_QWEN3VL4B,
+            base_url=ENVIRONMENT_CONFIG.OLLAMA_SERVICE_HOST
         )
 
     def get_llm(self) -> OllamaLLM:
@@ -36,7 +36,7 @@ class OllamaQwen3vl4b(LLMModelBase):
         Raises:
             OllamaCallError: If all retry attempts fail
         """
-        max_retries = environment_config.max_retries
+        max_retries = ENVIRONMENT_CONFIG.MAX_RETRIES
 
         for attempt in range(max_retries):
             try:
@@ -47,10 +47,10 @@ class OllamaQwen3vl4b(LLMModelBase):
                     continue
                 else:
                     dev_message = (
-                        f"{environment_config.max_retries_dev_msg}"
+                        f"{ENVIRONMENT_CONFIG.MAX_RETRIES_DEV_MSG}"
                         f"{max_retries}. Last error: {str(e)}"
                     )
-                    user_message = environment_config.max_retries_user_msg
+                    user_message = ENVIRONMENT_CONFIG.MAX_RETRIES_USER_MSG
                     raise OllamaCallError(
                         message=dev_message,
                         user_message=user_message,
