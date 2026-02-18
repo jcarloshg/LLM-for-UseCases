@@ -1,0 +1,20 @@
+services:
+  # Service 1: The Model Server (Ollama)
+  ollama-service:
+    image: ollama/ollama:latest
+    container_name: sql_model_server
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_data:/root/.ollama # Persist models so you don't re-download them
+      - .:/app
+    working_dir: /app
+    networks:
+      - llm_network
+
+volumes:
+  ollama_data:
+
+networks:
+  llm_network:
+    driver: bridge
