@@ -45,6 +45,22 @@ class EnvironmentConfig(BaseModel):
         description="Developer error message template for retry failures"
     )
 
+    def __str__(self) -> str:
+        """String representation of environment configuration."""
+        return (
+            f"EnvironmentConfig(\n"
+            f"  OLLAMA_SERVICE_HOST: {self.OLLAMA_SERVICE_HOST}\n"
+            f"  OLLAMA_SERVICE_MODEL_QWEN3VL4B: {self.OLLAMA_SERVICE_MODEL_QWEN3VL4B}\n"
+            f"  MAX_RETRIES: {self.MAX_RETRIES}\n"
+            f"  MAX_RETRIES_USER_MSG: {self.MAX_RETRIES_USER_MSG}\n"
+            f"  MAX_RETRIES_DEV_MSG: {self.MAX_RETRIES_DEV_MSG}\n"
+            f")"
+        )
+
+    def __repr__(self) -> str:
+        """Developer-friendly representation."""
+        return self.__str__()
+
     class Config:
         populate_by_name = True
 
@@ -77,5 +93,7 @@ ENVIRONMENT_CONFIG = EnvironmentConfig(
         ),
     }
 )
+
+print(f"ENVIRONMENT_CONFIG {ENVIRONMENT_CONFIG.__str__}")
 
 __all__ = ["EnvironmentConfig", "ENVIRONMENT_CONFIG"]
