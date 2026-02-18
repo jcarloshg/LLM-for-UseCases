@@ -51,8 +51,9 @@ class EnvironmentConfig(BaseModel):
 
 # // ─────────────────────────────────────
 # Load and validate environment variables
+# ENVIRONMENT_CONFIG
 # // ─────────────────────────────────────
-environment_config = EnvironmentConfig(
+ENVIRONMENT_CONFIG = EnvironmentConfig(
     **{
         "OLLAMA-SERVICE-HOST": os.getenv(
             "OLLAMA-SERVICE-HOST",
@@ -77,4 +78,4 @@ environment_config = EnvironmentConfig(
     }
 )
 
-__all__ = ["EnvironmentConfig", "environment_config"]
+__all__ = ["EnvironmentConfig", "ENVIRONMENT_CONFIG"]

@@ -1,8 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
-from src.shared.models import OllamaService, OllamaCallError
-
-# Initialize the Ollama service singleton with validated environment variables
-ollama_service = OllamaService()
+from src.shared.models import OllamaQwen3vl4b, OllamaCallError
 
 # Create a simple prompt template
 prompt = ChatPromptTemplate.from_template(
@@ -19,11 +16,14 @@ if __name__ == "__main__":
     print("-" * 50)
 
     try:
-        # Get response from the LLM with retry logic
-        response = ollama_service.safe_call(formatted_prompt)
+        # Initialize the Ollama Qwen3-VL:4B model with retry logic
+        qwen3vl4b_model = OllamaQwen3vl4b()
+
+        # Get response from the LLM with safe_call (includes retry logic)
+        response = qwen3vl4b_model.safe_call(formatted_prompt)
         print(f"Answer: {response}")
     except OllamaCallError as e:
         # Show user-friendly message to end users
-        print(f"Error: {e._user_message}")
+        print(f"Error: {e.user_message}")
         # Optionally log developer message for debugging
         print(f"[DEBUG] {e.dev_message}")

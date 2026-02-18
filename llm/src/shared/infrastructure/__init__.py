@@ -1,3 +1,6 @@
-from .environment_variables import EnvironmentConfig, environment_config
+from .environment_variables import EnvironmentConfig, ENVIRONMENT_CONFIG
 
-__all__ = ["EnvironmentConfig", "environment_config"]
+__all__ = [
+    "EnvironmentConfig",
+    "ENVIRONMENT_CONFIG",
+]
