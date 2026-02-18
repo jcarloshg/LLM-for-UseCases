@@ -1,5 +1,4 @@
 services:
-  # Service 1: The Model Server (Ollama)
   ollama-service:
     image: ollama/ollama:latest
     container_name: ollama_service
