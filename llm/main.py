@@ -1,9 +1,14 @@
-from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+from src.shared.infrastructure import OLLAMA_SERVICE_HOST, OLLAMA_SERVICE_MODEL
+from src.shared.models import OllamaConfig, OllamaService
 
-# Initialize the Ollama LLM with local host
-# Note: Make sure ollama is running via docker-compose up
-llm = OllamaLLM(model="qwen3-vl:4b", base_url="http://localhost:11435")
+# Initialize the Ollama service with configuration from .env.dev
+ollama_config = OllamaConfig(
+    host=OLLAMA_SERVICE_HOST,
+    model=OLLAMA_SERVICE_MODEL
+)
+ollama_service = OllamaService(ollama_config)
+llm = ollama_service.get_llm()
 
 # Create a simple prompt template
 prompt = ChatPromptTemplate.from_template(
