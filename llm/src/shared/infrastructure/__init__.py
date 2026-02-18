@@ -1,3 +1,3 @@
-from .environment_variables import OLLAMA_SERVICE_HOST, OLLAMA_SERVICE_MODEL
+from .environment_variables import EnvironmentConfig, environment_config
 
-__all__ = ["OLLAMA_SERVICE_HOST", "OLLAMA_SERVICE_MODEL"]
+__all__ = ["EnvironmentConfig", "environment_config"]

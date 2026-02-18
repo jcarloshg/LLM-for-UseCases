@@ -1,14 +1,9 @@
 from langchain_core.prompts import ChatPromptTemplate
-from src.shared.infrastructure import OLLAMA_SERVICE_HOST, OLLAMA_SERVICE_MODEL
-from src.shared.models import OllamaConfig, OllamaService
+from src.shared.models import OllamaService
 
-# Initialize the Ollama service with configuration from .env.dev
-ollama_config = OllamaConfig(
-    host=OLLAMA_SERVICE_HOST,
-    model=OLLAMA_SERVICE_MODEL
-)
-ollama_service = OllamaService(ollama_config)
-llm = ollama_service.get_llm()
+# Initialize the Ollama service singleton with validated environment variables
+ollama_service = OllamaService()
+llm = ollama_service.get_qwen3vl4b()
 
 # Create a simple prompt template
 prompt = ChatPromptTemplate.from_template(

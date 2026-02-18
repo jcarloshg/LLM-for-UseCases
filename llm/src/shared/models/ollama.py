@@ -1,43 +1,35 @@
-from pydantic import BaseModel, Field
 from langchain_ollama import OllamaLLM
 
-from src.shared.infrastructure import OLLAMA_SERVICE_HOST, OLLAMA_SERVICE_MODEL
-
-
-class OllamaConfig(BaseModel):
-    """Configuration for Ollama LLM service."""
-
-    host: str = Field(
-        default="http://localhost:11435",
-        description="The base URL of the Ollama service"
-    )
-    model: str = Field(
-        default="qwen3-vl:4b",
-        description="The model name to use for Ollama"
-    )
-
-    class Config:
-        frozen = True
+from src.shared.infrastructure import environment_config
 
 
 class OllamaService:
-    """Service wrapper for Ollama LLM."""
+    """Service wrapper for Ollama LLM (Singleton)."""
 
-    def __init__(self, config: OllamaConfig):
-        self.config = config
+    __instance: "OllamaService | None" = None
+    __qwen3vl4b_instance: OllamaLLM | None = None
+
+    def __new__(cls):
+        if cls.__instance is None:
+            cls.__instance = super().__new__(cls)
+            cls.__instance.__initialized = False
+        return cls.__instance
+
+    def __init__(self):
+        if self.__initialized:
+            return
         self.llm = OllamaLLM(
-            model=config.model,
-            base_url=config.host
+            model=environment_config.ollama_service_model_qwen3vl4b,
+            base_url=environment_config.ollama_service_host
         )
+        self.__initialized = True
 
-    def get_llm(self) -> OllamaLLM:
-        """Get the OllamaLLM instance."""
-        return self.llm
-
-    def get_qwen3vl4b() -> OllamaLLM:
-        if not self.qwen3vl4b:
-            self.qwen3vl4b = OllamaLLM(
-                model=OLLAMA_SERVICE_MODEL,
-                base_url=OLLAMA_SERVICE_HOST,
+    @classmethod
+    def get_qwen3vl4b(cls) -> OllamaLLM:
+        """Get or create a singleton instance of Qwen3-VL:4B model."""
+        if cls.__qwen3vl4b_instance is None:
+            cls.__qwen3vl4b_instance = OllamaLLM(
+                model=environment_config.ollama_service_model_qwen3vl4b,
+                base_url=environment_config.ollama_service_host,
             )
-        return self.qwen3vl4b
+        return cls.__qwen3vl4b_instance
