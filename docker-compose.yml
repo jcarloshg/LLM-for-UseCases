@@ -2,7 +2,7 @@ services:
   # Service 1: The Model Server (Ollama)
   ollama-service:
     image: ollama/ollama:latest
-    container_name: sql_model_server
+    container_name: ollama_service
     ports:
       - "11435:11434"
     volumes:
