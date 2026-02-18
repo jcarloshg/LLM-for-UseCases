@@ -15,24 +15,34 @@ class EnvironmentConfig(BaseModel):
     # // ─────────────────────────────────────
     # OLLAMA Configuration
     # // ─────────────────────────────────────
-    ollama_service_host: str = Field(
+    OLLAMA_SERVICE_HOST: str = Field(
         default="http://localhost:11435",
         alias="OLLAMA-SERVICE-HOST",
         description="The base URL of the Ollama service"
     )
-    ollama_service_model_qwen3vl4b: str = Field(
+    OLLAMA_SERVICE_MODEL_QWEN3VL4B: str = Field(
         default="qwen3-vl:4b",
         alias="OLLAMA_SERVICE_MODEL_QWEN3VL4B",
         description="The Qwen3-VL:4B model name"
     )
 
     # // ─────────────────────────────────────
-    # Error Handling & Retries
+    # ERROR HANDLING & RETRIES
     # // ─────────────────────────────────────
-    max_retries: int = Field(
+    MAX_RETRIES: int = Field(
         default=3,
         alias="MAX_RETRIES",
         description="Maximum number of retries for API calls"
+    )
+    MAX_RETRIES_USER_MSG: str = Field(
+        default="The AI service is currently unavailable. Please try again in a moment.",
+        alias="MAX_RETRIES_USER_MSG",
+        description="User-friendly error message for retry failures"
+    )
+    MAX_RETRIES_DEV_MSG: str = Field(
+        default="Failed to call Ollama. Attempt # ",
+        alias="MAX_RETRIES_DEV_MSG",
+        description="Developer error message template for retry failures"
     )
 
     class Config:
@@ -55,6 +65,14 @@ environment_config = EnvironmentConfig(
         "MAX_RETRIES": os.getenv(
             "MAX_RETRIES",
             "3"
+        ),
+        "MAX_RETRIES_USER_MSG": os.getenv(
+            "MAX_RETRIES_USER_MSG",
+            "The AI service is currently unavailable. Please try again in a moment."
+        ),
+        "MAX_RETRIES_DEV_MSG": os.getenv(
+            "MAX_RETRIES_DEV_MSG",
+            "Failed to call Ollama. Attempt # "
         ),
     }
 )

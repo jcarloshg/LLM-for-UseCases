@@ -1,3 +1,3 @@
-from .ollama import OllamaService
+from .ollama import OllamaService, OllamaCallError
 
-__all__ = ["OllamaService"]
+__all__ = ["OllamaService", "OllamaCallError"]
