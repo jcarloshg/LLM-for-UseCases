@@ -12,6 +12,9 @@ load_dotenv(".env.dev")
 class EnvironmentConfig(BaseModel):
     """Validated environment configuration."""
 
+    # // ─────────────────────────────────────
+    # OLLAMA Configuration
+    # // ─────────────────────────────────────
     ollama_service_host: str = Field(
         default="http://localhost:11435",
         alias="OLLAMA-SERVICE-HOST",
@@ -19,8 +22,17 @@ class EnvironmentConfig(BaseModel):
     )
     ollama_service_model_qwen3vl4b: str = Field(
         default="qwen3-vl:4b",
-        alias="OLLAMA-SERVICE-MODEL",
+        alias="OLLAMA_SERVICE_MODEL_QWEN3VL4B",
         description="The Qwen3-VL:4B model name"
+    )
+
+    # // ─────────────────────────────────────
+    # Error Handling & Retries
+    # // ─────────────────────────────────────
+    max_retries: int = Field(
+        default=3,
+        alias="MAX_RETRIES",
+        description="Maximum number of retries for API calls"
     )
 
     class Config:
@@ -36,9 +48,13 @@ environment_config = EnvironmentConfig(
             "OLLAMA-SERVICE-HOST",
             "http://localhost:11435"
         ),
-        "OLLAMA-SERVICE-MODEL": os.getenv(
-            "OLLAMA-SERVICE-MODEL",
+        "OLLAMA_SERVICE_MODEL_QWEN3VL4B": os.getenv(
+            "OLLAMA_SERVICE_MODEL_QWEN3VL4B",
             "qwen3-vl:4b"
+        ),
+        "MAX_RETRIES": os.getenv(
+            "MAX_RETRIES",
+            "3"
         ),
     }
 )
