@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 from src.shared.models import OllamaQwen3vl4b, OllamaCallError
+from src.shared.infrastructure import ENVIRONMENT_CONFIG
 
 # Create a simple prompt template
 prompt = ChatPromptTemplate.from_template(
@@ -20,7 +21,11 @@ if __name__ == "__main__":
         qwen3vl4b_model = OllamaQwen3vl4b()
 
         # Get response from the LLM with safe_call (includes retry logic)
-        response = qwen3vl4b_model.safe_call(formatted_prompt)
+        # response = qwen3vl4b_model.safe_call(formatted_prompt)
+        response = qwen3vl4b_model.safe_call_with_tokens(
+            max_retries=ENVIRONMENT_CONFIG.MAX_RETRIES,
+            prompt=formatted_prompt
+        )
         print(f"Answer: {response}")
     except OllamaCallError as e:
         # Show user-friendly message to end users
