@@ -1,0 +1,58 @@
+[
+    {
+        "id": "eval_001",
+        "user_story": "As a user, I want to reset my password so that I can regain access to my account",
+        "expected_test_count": 4,
+        "expected_priorities": [
+            "high",
+            "medium"
+        ],
+        "must_cover": [
+            "successful password reset",
+            "invalid email",
+            "expired reset link",
+            "password requirements"
+        ]
+    },
+    {
+        "id": "eval_002",
+        "user_story": "As a seller, I want to upload product images so that customers can see what I'm selling",
+        "expected_test_count": 5,
+        "must_cover": [
+            "successful upload",
+            "invalid file format",
+            "file size limit",
+            "multiple images"
+        ]
+    },
+    {
+        "id": "eval_003",
+        "user_story": "As a user, I want to filter search results by price range so that I can find products within my budget",
+        "expected_test_count": 4,
+        "must_cover": [
+            "filter with valid range",
+            "no results in range",
+            "invalid price input"
+        ]
+    },
+    {
+        "id": "eval_004",
+        "user_story": "As a premium member, I want to download invoices so that I can keep records for accounting",
+        "expected_test_count": 3,
+        "must_cover": [
+            "successful download",
+            "non-premium user blocked",
+            "invoice not found"
+        ]
+    },
+    {
+        "id": "eval_005",
+        "user_story": "As a moderator, I want to flag inappropriate content so that I can maintain community standards",
+        "expected_test_count": 4,
+        "must_cover": [
+            "flag with reason",
+            "duplicate flagging",
+            "unflag content"
+        ]
+    }
+]
